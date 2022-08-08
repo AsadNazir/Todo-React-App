@@ -1,12 +1,10 @@
 import { useReducer, useState } from "react";
-import logo from "./logo.svg";
-
 import "./App.css";
 import Notes from "./Components/Notes";
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
 import StyledTextFields from "./Components/StyledTextFields";
-import { AddRounded, TodayRounded } from "@mui/icons-material";
+import { AddRounded} from "@mui/icons-material";
 
 export const fonts = {
   font1: "clamp(1rem,3vw,1.3rem)",
@@ -23,6 +21,12 @@ export const ACTION = {
 function reducer(state, action) {
   switch (action.action) {
     case ACTION.ADD:
+      if (
+        action.payload.headText.length == 0 ||
+        action.payload.bodyText.length == 0
+      ) {
+        return state;
+      }
       return [
         ...state,
         {
@@ -42,7 +46,6 @@ function reducer(state, action) {
       });
 
     case ACTION.DEL:
-    
       return state.filter((todo) => todo.key !== action.payload);
 
       break;
@@ -58,32 +61,41 @@ function App() {
 
   function ChangeText(e) {
     setText(e.target.value);
-  
   }
   function ChangeHead(e) {
     setHeading(e.target.value);
-    
   }
   return (
     <div
       className="App"
       style={{ width: "clamp(250px,90vw,600px)", margin: "auto" }}
     >
-      <h1 style={{ color: "white" }}>Notes App</h1>
-      <StyledTextFields rows={2} value={heading} setter={ChangeHead} />
-      <StyledTextFields rows={5} value={text} setter={ChangeText} />
+      <h1 style={{ color: "white" }}>Todo App</h1>
+      <StyledTextFields
+        placeHolders={"Heading over here"}
+        rows={2}
+        value={heading}
+        setter={ChangeHead}
+      />
+      <StyledTextFields
+        placeHolders={"Body over here"}
+        rows={5}
+        value={text}
+        setter={ChangeText}
+      />
       <Box>
         <Button
-          onClick={() =>{
-          
+          onClick={() => {
             dispatch({
               action: ACTION.ADD,
               payload: { headText: heading, bodyText: text },
-            })
-            setHeading("");
-            setText("");
-          }
-          }
+            });
+            if (heading.length != 0 && text.length != 0) {
+              setHeading("");
+              setText("");
+            }
+          }}
+          sx={{ margin: "1rem 0" }}
           endIcon={<AddRounded />}
           variant="contained"
         >

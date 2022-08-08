@@ -1,9 +1,7 @@
-import { InputLabel } from "@mui/material";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import { InputBase, Slider, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
-import { blue } from "@mui/material/colors";
 
 const CustomeTextField = styled(InputBase)`
   .root {
@@ -27,7 +25,7 @@ const CustomeTextField = styled(InputBase)`
 export default function StyledComponentsDeep(props) {
   return (
     <Box>
-      <CustomeTextField value={props.value} onChange={props.setter} rows={props.rows} fullWidth aria-label="Some" placeholder="Some" multiline />
+      <CustomeTextField value={props.value} onChange={props.setter} rows={props.rows} fullWidth aria-label="Some" placeholder={props.placeHolders} multiline />
     </Box>
   );
 }
